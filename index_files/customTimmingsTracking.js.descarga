@@ -1,0 +1,96 @@
+    // window.trackTimmings recibe listTimes que es una lista de object con la siguiente estructura: [{metricName: string, time?: number}] (OBLIGATORIO).
+    // En el caso de no pasar time (o que el valor no sea number), se calculara el time con: Math.round(window.performance.now());
+    // data, un mapa que puede contener distinto tipo de información; flow, subflow, user, etc.
+    // uow (OBLIGATORIO).
+    // pageViewId (OBLIGATORIO).
+    let times = {};
+    let data = null;
+    let pageViewId = null;
+    let uow = null;
+    window.customTimmings = {};
+
+    window.customTimmings.trackTimmings = (listTimes, _data, _uow, _pageViewId) => {
+        if (!(listTimes && listTimes.length > 0)) {
+            return null;
+        }
+
+        for (let i = 0; i < listTimes.length; i++) {
+            if (typeof listTimes[i].metricName === 'string') {
+                times[listTimes[i].metricName] = (listTimes[i].time && typeof listTimes[i].time === 'number') ? listTimes[i].time : Math.round(window.performance.now()); 
+            }
+        }
+        if (_data) {
+            data = Object.assign({}, data, _data);
+        }
+        if (_uow && typeof _uow === 'string') {
+            uow = _uow;
+        }
+        if (_pageViewId && typeof _pageViewId === 'string') {
+            pageViewId = _pageViewId;
+        }
+    }
+
+    // En caso de que venga el parametro tp, agarra ese sin importar si se le pasa time o no.
+    window.customTimmings.trackMainFeature = (_data, _uow, _pageViewId, time) => {
+        let mainFeatureTime = time ? time : Math.round(window.performance.now());
+        if (window && window.location && window.location.search) {
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            
+            if (params && params.tp) {
+                let tpParam = params.tp
+                tpParam = JSON.parse(atob(tpParam));
+
+                const navigationStart = performance.timeOrigin || performance.timing.navigationStart;
+                const now = performance.now();
+            
+                mainFeatureTime = navigationStart - tpParam.Ins + now;
+
+            } 
+        }
+    
+        if (_data) {
+            data = Object.assign({}, data, _data);
+        }
+        if (_uow && typeof _uow === 'string') {
+            uow = _uow;
+        }
+        if (_pageViewId && typeof _pageViewId === 'string') {
+            pageViewId = _pageViewId;
+        }
+        times['main-feature'] = mainFeatureTime;
+    }
+
+    window.customTimmings.trackBounce = (_data, _uow, _pageViewId, time) => {
+        if (_data) {
+            data = Object.assign({}, data, _data);
+        }
+        if (_uow && typeof _uow === 'string') {
+            uow = _uow;
+        }
+        if (_pageViewId && typeof _pageViewId === 'string') {
+            pageViewId = _pageViewId;
+        }
+        times['bounce-time'] = time ? time : Math.round(window.performance.now());
+    }
+
+
+    window.addEventListener('beforeunload', () => {
+        if (times && Object.keys(times).length > 0){
+            let upaTopicData = {
+                data,
+                durations: times,
+                uow,
+                pageview_id: pageViewId
+            };
+        
+            try {
+                const headers = {
+                    type: 'application/json',
+                };
+            const blob = new Blob([JSON.stringify(upaTopicData)], headers);
+            navigator.sendBeacon("/hermes-service/topic/shopping_timmings", blob);
+        } catch(e) {}
+        }
+    });

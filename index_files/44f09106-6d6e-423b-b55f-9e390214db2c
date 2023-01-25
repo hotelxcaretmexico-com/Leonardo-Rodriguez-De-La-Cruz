@@ -1,0 +1,162 @@
+/* Todo selector debe ir encapsulado por su componente padre ej: #pre-footer */
+
+#pre-footer .description-links h3 {
+    font-size: 14px;
+    margin: 10px 0 12px 0;
+    font-weight: 500;
+}
+
+#pre-footer .description-links a:hover{
+    color: #666!important;
+}
+
+#pre-footer .description-container {
+    margin-bottom: 80px!important;
+    margin-top: 20px!important;
+}
+
+#pre-footer .description-container a {
+    text-decoration: none;
+    font-weight: inherit;
+    display: block;
+    display: flex;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.53;
+}
+
+footer {
+    background-color: #fff;
+}
+
+footer .footer-container {
+    max-width: 1074px;
+    margin: auto;
+    padding: 55px;
+}
+
+footer .footer-legal-container {
+    border-top: 1px solid #ddd;
+    font-size: 12px;
+}
+
+footer .footer-icon-list {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+footer .footer-icon-list li {
+    display: inline-flex;
+}
+
+footer .footer-icon-list li img {
+    max-height: 60px;
+}
+
+footer .footer-links {
+    padding: 40px 0;
+}
+
+footer .footer-links p {
+    margin: 10px 0;
+    font-size: 13px;
+}
+
+footer .footer-links a {
+    margin: 10px 0;
+    font-size: 13px;
+    text-decoration: none;
+    color: #888;
+    font-weight: inherit;
+    display: block;
+}
+
+footer .footer-links a:hover {
+    color: #ccc!important;
+}
+
+footer .footer-links .title-link {
+    color: #444;
+    font-weight: 500;
+}
+
+footer .footer-share-list li {
+    display: inline-block;
+}
+
+footer .footer-share-list li a {
+    display: inline-block;
+    font-size: 20px;
+    margin: 0 20px 0 0;
+    color: #666;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+footer .footer-share-list li a:hover {
+    color: #ccc!important;
+}
+    
+footer .select-tag:focus {
+    border-color: var(--brand-primary-3)!important;
+}
+
+footer .footer-phone {
+    color: #888!important;
+    padding: 0 5px 0 0;
+}
+
+footer .footer-phone span {
+    font-weight: normal;
+}
+
+footer .footer-phone strong {
+    color: #444;
+}
+
+footer .contact-row {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 36px;
+}
+
+footer .select-title{
+    font-size: 12px!important; 
+    margin: 10px 0 5px 0;
+    font-weight: 500!important;
+}
+
+footer .legal-link{
+    color:#888;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    #pre-footer .description-links h3 {
+        margin: 30px 0 12px 0;
+    }
+    
+    #pre-footer .description-title {
+        font-size: 20px!important;
+    }
+
+    footer .contact-row {
+        text-align: center;
+        padding-bottom: 0;
+    }
+    
+    footer .contact-row .col {
+        padding: 25px 0!important;
+    }
+    
+    footer .footer-links p, footer.footer-links a {
+        margin: 30px 0 !important;
+    }
+
+    footer .footer-container {
+        padding: 20px;
+    }
+
+    footer .footer-links {
+        padding: 10px;
+    }
+}

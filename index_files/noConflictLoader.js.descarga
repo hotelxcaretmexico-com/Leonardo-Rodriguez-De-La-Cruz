@@ -1,0 +1,1 @@
+define({load:function(e,t,n,r){if(r.isBuild)n();else{var i="-private",s=null;switch(e){case"jquery":s="jQuery";break;case"underscore":s="_";break;case"backbone":s="Backbone";break;default:n.error(new Error(e+" is not supported by noConflictLoader!"));return}t([e+i],function(){n(window[s].noConflict(!0))})}}});
